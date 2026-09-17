@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="高校生向け体験授業のコード集。授業と教材を選んでコピーできます。">
+<meta name="description" content="高校生向け体験授業のコード集。授業回数と教材を選んでコピーできます。">
 <title>体験授業｜コードライブラリ</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/materials.js" defer></script><script src="assets/app.js" defer></script>
@@ -10,17 +10,17 @@
 <body>
 <header><a class="brand" href="./"><span class="mark" aria-hidden="true">&lt;/&gt;</span> CODE LIBRARY <span class="tag">体験授業</span></a></header>
 <main>
-<section class="intro"><p class="eyebrow">はじめの一歩を、ここから。</p><h1>選んで、コピー。<br>コードを動かしてみよう。</h1><p>先生の案内に合わせて、授業の回とコードを選んでください。</p></section>
+<section class="intro"><p class="eyebrow">中部大学付属第一高校用</p><h1>選んで、コピー。<br>コードを動かしてみよう。</h1><p>授業時の案内に合わせて、回とコードを選んでください。</p></section>
 <div class="workspace">
 <section class="picker" aria-labelledby="choose-title"><h2 id="choose-title">教材を選ぶ</h2>
 <label for="lesson"><span class="step">1</span> 授業の回</label><select id="lesson" disabled><option>読み込み中…</option></select>
 <label for="material"><span class="step">2</span> コード名</label><select id="material" disabled><option>コードを選択</option></select>
-<p id="count" class="muted"></p><div class="hint"><strong>コピーしたあとは？</strong><p>先生が指定したエディタに貼り付けて、実行してみましょう。</p></div></section>
+<p id="count" class="muted"></p><div class="hint"><strong>コピーしたあとは？</strong><p>エディタ（VSC）に貼り付けて、Webブラウザで実行してみましょう。</p></div></section>
 <section class="viewer" aria-labelledby="code-title"><div class="toolbar"><div><p id="lesson-label" class="eyebrow">YOUR CODE</p><h2 id="code-title">コードを選んでください</h2></div><button id="copy" disabled>コードをコピー</button></div>
 <div class="filebar"><span id="filename">未選択</span><span id="lines"></span></div>
 <pre id="code-panel" tabindex="0" aria-label="教材コード"><code id="code"></code></pre>
 <p id="status" role="status" aria-live="polite">教材を読み込んでいます。</p><button id="select-code" class="secondary" hidden>コードを選択して手動コピー</button>
 </section></div>
 <noscript><p class="error">コードを表示するには、ブラウザのJavaScriptを有効にしてください。</p></noscript>
-<footer><span>体験授業 · 全6回</span><span>小さな一行から、つくる楽しさを。</span></footer>
+<footer><span>体験授業 · 全6回</span><span>この授業では、作る楽しさを体験します。</span></footer>
 </main></body></html>
