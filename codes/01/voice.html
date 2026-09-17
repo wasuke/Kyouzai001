@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>VoiceVox 実験</title>
+</head>
+<body>
+<h1>VoiceVox 音声合成</h1>
+<p>下に文章を入力して「喋る」を押すと、VoiceVoxが話します。</p>
+<textarea id="text" rows="4" cols="50">
+こんにちは、ボイスボックスです。
+</textarea><br>
+<label>話者番号：</label>
+<input type="number" id="speaker" value="1" min="1" max="50">
+
+<button id="send">送信</button>
+<p>音声クエリJSON（編集可）：</p>
+<textarea id="queryJson" rows="12" cols="70"></textarea>
+<br>
+
+<button id="speak">喋る</button>
+<script>
+const textArea = document.getElementById("text");
+const speakerInput = document.getElementById("speaker");
+const queryTextArea = document.getElementById("queryJson");
+const sendButton = document.getElementById("send");
+const speakButton = document.getElementById("speak");
+sendButton.onclick = async () => {
+const text = textArea.value.trim();
+const speaker = speakerInput.value;
+if (!text) {
+alert("テキストを入力してください。");
+return;
+}
+try {
+const queryRes = await fetch(
+"http://127.0.0.1:50021/audio_query?text=" +
+encodeURIComponent(text) +
+"&speaker=" +
+encodeURIComponent(speaker),
+{ method: "POST" }
+);
+if (!queryRes.ok) {
+alert("audio_query の取得に失敗しました。VoiceVoxエンジンが起動しているか確認してください。");
+return;
+}
+const queryJson = await queryRes.json();
+queryTextArea.value = JSON.stringify(queryJson, null, 2);
+} catch (e) {
+console.error(e);
+alert("audio_query の取得中にエラーが発生しました。");
+}
+};
+speakButton.onclick = async () => {
+const speaker = speakerInput.value;
+const jsonText = queryTextArea.value.trim();
+if (!jsonText) {
+alert("先に「送信」を押してJSONを取得してください。");
+return;
+}
+let queryObj;
+try {
+queryObj = JSON.parse(jsonText);
+} catch (e) {
+alert("JSONの形式が正しくありません。編集内容を確認してください。");
+return;
+}
+try {
+const audioRes = await fetch(
+"http://127.0.0.1:50021/synthesis?speaker=" +
+encodeURIComponent(speaker),
+{
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(queryObj)
+}
+);
+if (!audioRes.ok) {
+alert("音声合成に失敗しました。");
+return;
+}
+const blob = await audioRes.blob();
+const url = URL.createObjectURL(blob);
+const audio = new Audio(url);
+audio.play();
+} catch (e) {
+console.error(e);
+alert("音声再生中にエラーが発生しました。");
+}
+};
+</script>
+</body>
+</html>
